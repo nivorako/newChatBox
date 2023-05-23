@@ -2,7 +2,7 @@ import React from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import Button  from "@mui/material/Button";
-
+import ChatBox from '../assets/chatBox.png';
 
 const Header = () => {
     return (
@@ -10,8 +10,8 @@ const Header = () => {
         <HeaderBlock>
             <HeaderLink to="/">
                 <HeaderTitle>
+                    <img src={ChatBox} alt="logo chat box" style={{width:'50px', height:'50px', borderRadius:'50%'}} />
                     <h1>Chat Box</h1>
-                    <img src="" alt="" />
                 </HeaderTitle>
             </HeaderLink>
             <HeaderNav>
@@ -31,6 +31,11 @@ const Header = () => {
                     <HeaderLink to="/Login">
                         <HeaderLi >
                             <StyledButton>Login</StyledButton>
+                        </HeaderLi>
+                    </HeaderLink>
+                    <HeaderLink to="/SignUp">
+                        <HeaderLi >
+                            <StyledButton>SignUp</StyledButton>
                         </HeaderLi>
                     </HeaderLink>
                 </HeaderUl>
@@ -53,6 +58,7 @@ const HeaderNav = styled.nav`
   width: 30%;
   display: flex;
   justify-content: space-between;
+  margin-right: 2rem;
 `;
 
 const HeaderUl = styled.ul`
@@ -80,22 +86,26 @@ const StyledButton = styled(Button)`
     color: white;
     &:hover{
         background-color: rgb(120, 120, 120);
-        box-shadow: 0px 0px 1px 0px white;
+        box-shadow: 0px 0px 10px 0px white;
       }
   }
 `;
 
 const HeaderTitle = styled.div`
-  margin-left: 2rem;
-  &:hover{
-    cursor: pointer;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: .5rem 2rem;
+    &:hover{
+        cursor: pointer;
+        box-shadow: 0px 0px 10px 0px white;
 }
 `;
 
 const HeaderLink = styled(Link)`
     color: white;
     text-decoration: none;
-   
 `;
 
 export default Header;

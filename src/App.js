@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Chat from "./pages/Chat";
 import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 
 function App() {
 	return (
@@ -15,6 +16,7 @@ function App() {
 				<Route path="/About" element={<About />} />
 				<Route path="/Chat" element={<Chat />} />
 				<Route path="/Login" element={<Login />} />
+				<Route path="/SignUp" element={<SignUp />} />
 			</Routes>
 		</>
 	);
