@@ -44,6 +44,12 @@ const Header = () => {
 							<StyledButton>SignUp</StyledButton>
 						</HeaderLi>
 					</HeaderLink>
+					&nbsp;<p>ou</p>&nbsp;
+					<HeaderLink to="/SignIn">
+						<HeaderLi>
+							<StyledButton>SignIn</StyledButton>
+						</HeaderLi>
+					</HeaderLink>
 				</HeaderUl>
 			</HeaderNav>
 		</HeaderBlock>
@@ -69,7 +75,8 @@ const HeaderNav = styled.nav`
 const HeaderUl = styled.ul`
   width: 50%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   list-style: none;
   @media (max-width: 767px) {
     display: none;

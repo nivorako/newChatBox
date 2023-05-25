@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
+import { redirect } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -53,31 +55,34 @@ const initialFormState = {
 };
 
 export default function SignUp() {
-  const [formData, setFormData] = React.useState(initialFormState);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const email = data.get("email");
-    const password = data.get("password");
-    const firstName = data.get("firstName");
-    const lastName = data.get("lastName");
-    console.log("lastName :", lastName);
-    console.log("firstName :", firstName);
+    const [formData, setFormData] = React.useState(initialFormState);
+    const navigate = useNavigate();
 
-    try {
-        await Parse.User.signUp(email, password, {
-            firstName: firstName,
-            lastName: lastName,
-        });
-        alert(`Success !! User  was created.`);
-        setFormData(initialFormState);
-        return true;
-        } catch (error) {
-        alert(`Error : ${error}`);
-        return false;
-    }
-  };
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        const email = data.get("email");
+        const password = data.get("password");
+        const firstName = data.get("firstName");
+        const lastName = data.get("lastName");
+        console.log("lastName :", lastName);
+        console.log("firstName :", firstName);
+
+        try {
+            await Parse.User.signUp(email, password, {
+                firstName: firstName,
+                lastName: lastName,
+            });
+            alert(`Success !! User  was created.`);
+            setFormData(initialFormState);
+            navigate("/SignIn");
+            return true;
+            } catch (error) {
+                alert(`Error : ${error}`);
+                return false;
+        }
+    };
 
   return (
     <ThemeProvider theme={defaultTheme}>

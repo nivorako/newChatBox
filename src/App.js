@@ -6,6 +6,7 @@ import About from "./pages/About";
 import Chat from "./pages/Chat";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import SignIn from "./pages/SignIn";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/Chat" element={<Chat />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
+		<Route path="/SignIn" element={<SignIn />} />
       </Routes>
     </>
   );
