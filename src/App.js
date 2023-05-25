@@ -8,18 +8,18 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 
 function App() {
-	return (
-		<>
-			<Header />
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/About" element={<About />} />
-				<Route path="/Chat" element={<Chat />} />
-				<Route path="/Login" element={<Login />} />
-				<Route path="/SignUp" element={<SignUp />} />
-			</Routes>
-		</>
-	);
+  return (
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/About" element={<About />} />
+        <Route path="/Chat" element={<Chat />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/SignUp" element={<SignUp />} />
+      </Routes>
+    </>
+  );
 }
 
 export default App;

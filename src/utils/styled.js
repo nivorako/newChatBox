@@ -1,14 +1,18 @@
 import { createTheme } from "@mui/material";
+import { css } from "styled-components";
+const theme = {
+  mediaQueries: {
+    small: (...args) => css`
+      @media (max-width: 768px) {
+        ${css(...args)}
+      }
+    `,
+    large: (...args) => css`
+      @media (min-width: 768px) {
+        ${css(...args)}
+      }
+    `,
+  },
+};
 
-const theme = createTheme({
-    overrides:{
-        MuiButton:{
-            root:{
-                backgroundColor: "rgb(87, 85, 85)",
-                color: "white",
-            },
-        },
-    },
-})
-
-export default theme
+export default theme;
