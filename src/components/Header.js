@@ -1,58 +1,85 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+
+import { useSelector } from "react-redux";
 import { styled, css } from "styled-components";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import ChatBox from "../assets/chatBox.png";
-import ThemeProvider from "styled-components";
 
-const theme = {
-  mediaQueries: {
-    small: (...args) => css`
-      @media (max-width: 768px) {
-      }
-    `,
-    large: (...args) => css`
-      @media (min-width: 768px) {
-      }
-    `,
-  },
-};
+import { setCurrentUser } from "../features/authSlice";
+
+import Parse from "parse";
+
 const Header = () => {
+    const {currentUser, loading} = useSelector((store) => store.auth);
+    const dispatch = useDispatch();
+    const HandleOnClick = async() => {  
+        try {
+            await Parse.User.logOut();
+            // To verify that current user is now empty, currentAsync can be used
+            const currentUser = Parse.User.current();
+            if (currentUser === null) {
+                alert('Success! No user is logged in anymore!');
+            }
+            // Update state variable holding current user
+            dispatch(setCurrentUser(null));
+            return true;
+        } catch (error) {
+            alert(`Error! ${error.message}`);
+            return false;
+        }
+    }
+    
 	return (
-		<HeaderBlock>
-			<HeaderLink to="/">
-				<HeaderTitle>
-					<img
-						src={ChatBox}
-						alt="logo chat box"
-						style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-					/>
-					<h1>Chat Box</h1>
-				</HeaderTitle>
-			</HeaderLink>
-			<HeaderNav>
-				<HeaderUl>
-					<HeaderLink to="/About">
-						<HeaderLi>
-							<StyledButton>A propos</StyledButton>
-						</HeaderLi>
-					</HeaderLink>
-				</HeaderUl>
-				<HeaderUl>
-					<HeaderLink to="/SignUp">
-						<HeaderLi>
-							<StyledButton>SignUp</StyledButton>
-						</HeaderLi>
-					</HeaderLink>
-					&nbsp;<p>ou</p>&nbsp;
-					<HeaderLink to="/SignIn">
-						<HeaderLi>
-							<StyledButton>SignIn</StyledButton>
-						</HeaderLi>
-					</HeaderLink>
-				</HeaderUl>
-			</HeaderNav>
-		</HeaderBlock>
+       
+        <HeaderBlock>
+            <HeaderLink to="/">
+                <HeaderTitle>
+                    <img
+                        src={ChatBox}
+                        alt="logo chat box"
+                        style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+                    />
+                    <h1>Chat Box</h1>
+                </HeaderTitle>
+            </HeaderLink>
+            <HeaderNav>
+                <HeaderUl>
+                    <HeaderLink to="/About">
+                        <HeaderLi>
+                            <StyledButton>A propos</StyledButton>
+                        </HeaderLi>
+                    </HeaderLink>
+                </HeaderUl>
+                <HeaderUl>
+                    {currentUser === null ? 
+                        <>
+                            <HeaderLink to="/SignUp">
+                                <HeaderLi>
+                                    <StyledButton>SignUp</StyledButton>
+                                </HeaderLi>
+                            </HeaderLink>
+                            &nbsp;<p>ou</p>&nbsp;
+                            <HeaderLink to="/SignIn">
+                                <HeaderLi>
+                                    <StyledButton>SignIn</StyledButton>
+                                </HeaderLi>
+                            </HeaderLink> 
+                        </>
+                        : 
+                        <>
+                            <HeaderLink to="#">
+                                <HeaderLi>
+                                    <StyledButton onClick={() => HandleOnClick()}>LogOut</StyledButton>
+                                </HeaderLi>
+                            </HeaderLink> 
+                        </>
+                    }
+                </HeaderUl>
+            </HeaderNav>
+        </HeaderBlock>
+       
 	);
 };
 
