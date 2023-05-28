@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from 'react-redux';
+import Link from '@mui/material/Link';
 
 import { Container, Box, Avatar } from "@mui/material";
 
@@ -40,19 +41,79 @@ const Chat = () => {
   return (
 	<Container
 		sx={{
-			widows:"100%",
+			width:"100%",
 			height:"calc(100vh - 50px)",
 			display:"flex",
 			justifyContent:"center",
 			alignItems:"center"
 		}}
 	>
-		<Avatar />
-		<Box>
-			<div>Hooo</div>
+		<Box
+			sx={{
+				width:"100%",
+				height:"100%",
+				backgroundColor:"rgb(249, 249, 249)",
+				display:"flex",
+				flexDirection:"column",
+				justifyContent:"center",
+				alignItems:"center"
+			}}
+		>
+			
+			<Box sx={conversationStyle}
+			>
+
+				<Avatar></Avatar>
+				<Link
+					sx={{
+						listStyle:"none"
+					}}
+				>
+					<Box sx={{ml:"2rem"}}>
+						<h3>Conversation Title</h3>
+						<p>This is current message </p>
+					</Box>
+				</Link>
+			</Box>
+			
+			<Box sx={conversationStyle}
+			>
+				<Avatar></Avatar>
+				<Box sx={{ml:"2rem"}}>
+					<h3>Conversation Title</h3>
+					<p>This is current message </p>
+				</Box>
+			</Box>
+			<Box sx={conversationStyle}
+			>
+				<Avatar></Avatar>
+				<Box sx={{ml:"2rem"}}>
+					<h3>Conversation Title</h3>
+					<p>This is current message </p>
+				</Box>
+			</Box>
+			<Box sx={conversationStyle}
+			>
+				<Avatar ></Avatar>
+				<Box sx={{ml:"2rem"}}>
+					<h3>Conversation Title</h3>
+					<p>This is current message </p>
+				</Box>
+			</Box>
 		</Box>
 	</Container>
   );
 };
+
+const conversationStyle = {
+	width: "90%",
+	display: "flex",
+	mt:"2rem",
+	boxShadow:"0 0 1px 0px",
+	alignItems: "center",
+	
+	pl:"2rem",
+	borderRadius:"5px"
+  };
 
 export default Chat;
