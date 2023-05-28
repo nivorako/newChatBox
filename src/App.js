@@ -1,12 +1,13 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import Private from "./pages/private/Private";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import Chat from "./pages/Chat";
-import Login from "./pages/Login";
+import Chat from "./pages/private/Chat";
+import Login from "./pages/private/Login";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 
@@ -34,7 +35,7 @@ function App() {
 				dispatch(setCurrentUser({email: currentUser.get('username')}))
 				console.log("username :", currentUser.get('firstName'))
 			}else{
-				dispatch(setCurrentUser(false));
+				dispatch(setCurrentUser(null));
 			}
 			dispatch(setLoading(false));
 		}
@@ -47,8 +48,11 @@ function App() {
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/About" element={<About />} />
-				<Route path="/Chat" element={<Chat />} />
-				<Route path="/Login" element={<Login />} />
+				<Route path="/private" element={<Private/>} >
+					<Route index element={<Chat />} />
+					<Route path="Chat" element={<Chat />} />
+					<Route path="Login" element={<Login />} />
+				</Route>
 				<Route path="/SignUp" element={<SignUp />} />
 				<Route path="/SignIn" element={<SignIn />} />
 			</Routes>
