@@ -1,10 +1,12 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-
 import { useSelector } from "react-redux";
 import { styled, css } from "styled-components";
 import { Link } from "react-router-dom";
+
 import Button from "@mui/material/Button";
+
+import Burger from "./Burger";
 import ChatBox from "../assets/chatBox.png";
 
 import { setCurrentUser } from "../features/authSlice";
@@ -87,6 +89,7 @@ const Header = () => {
                     }
                 </HeaderUl>
             </HeaderNav>
+            <Burger/>
         </HeaderBlock>
        
 	);
@@ -99,6 +102,8 @@ const HeaderBlock = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+    z-index: 100;
+    position: relative;
 `;
 
 const HeaderNav = styled.nav`
@@ -106,6 +111,9 @@ const HeaderNav = styled.nav`
 	display: flex;
 	justify-content: space-between;
 	margin-right: 2rem;
+    @media (max-width: 767px) {
+        display: none;
+    }
 `;
 
 const HeaderUl = styled.ul`
@@ -114,23 +122,13 @@ const HeaderUl = styled.ul`
 	justify-content: center;
 	align-items: center;
 	list-style: none;
-	@media (max-width: 767px) {
-    display: none;
-  }
 `;
 
 const HeaderLi = styled.li``;
-
-const HeaderBtn = styled.button`
-	background-color: rgb(87, 85, 85);
-	color: white;
-	&:hover {
-		cursor: pointer;
-	}
-`;
-
+// && sert à augmeter la spécificité
 const StyledButton = styled(Button)`
 	&& {
+        width: 100px;
 		background-color: grey;
 		color: white;
 		&:hover {

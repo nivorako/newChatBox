@@ -7,7 +7,7 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Chat from "./pages/private/Chat";
-import Login from "./pages/private/Login";
+import Message from "./pages/private/Message";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 
@@ -51,7 +51,7 @@ function App() {
 				<Route path="/private" element={<Private/>} >
 					<Route index element={<Chat />} />
 					<Route path="Chat" element={<Chat />} />
-					<Route path="Login" element={<Login />} />
+					<Route path="Message" element={<Message />} />
 				</Route>
 				<Route path="/SignUp" element={<SignUp />} />
 				<Route path="/SignIn" element={<SignIn />} />
