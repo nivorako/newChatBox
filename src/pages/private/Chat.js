@@ -1,18 +1,25 @@
-import React, {useState} from "react";
-
-import {Link} from 'react-router-dom';
+import React from "react";
 
 import styled from "@emotion/styled";
 
-import { Box, Avatar } from "@mui/material";
-import MessageIcon from '@mui/icons-material/Message';
-import Tooltip from '@mui/material/Tooltip';
+import { Box } from "@mui/material";
 
-import Conversation from "../../components/Conversation";
+import Conversations from "../../components/Conversations";
 
+import Parse from 'parse';
+
+const PARSE_APPLICATION_ID = '2pn9703HOxQyGkBkb0v8C0IhJDScs2taBFHGqq0r';
+const PARSE_HOST_URL = 'https://parseapi.back4app.com/';
+const PARSE_JAVASCRIPT_KEY = 'vD0dmcLEn9vlLjVEz4vBzmwovKtquqbThjhTl7je';
+Parse.initialize(PARSE_APPLICATION_ID, PARSE_JAVASCRIPT_KEY);
+Parse.serverURL = PARSE_HOST_URL;
+
+const User = Parse.Object.extend("User");
+const query = new Parse.Query(User);
+const users = await query.find();
+console.log('users :', users)
 const Chat = () => {
-	const [newConversation, setNewConversation] = useState(false);
-  	
+	
   	return (
 		<Box
 			sx={{
@@ -21,95 +28,20 @@ const Chat = () => {
 				justifyContent:"center"
 			}}
 		>
-			<Box
-				sx={{
-					width:"40%",
-					height:"calc(100vh - 30px)",
-					backgroundColor:"rgb(249, 249, 249)",
-					display:"flex",
-					flexDirection:"column",
-					justifyContent:"flex-start",
-					alignItems:"center",
-					p:"2rem"
-				}}
-			>
-				<Box
-					sx={{
-						alignSelf:"flex-end",
-						mr:"2rem"
-					}}
-				>
-					<Tooltip title="nouvelle discussion">
-						<MessageIcon onClick={() => setNewConversation(!newConversation)}/>
-					</Tooltip>
-				</Box>
-				{!newConversation ? 
-				<>
-					<Box 
-						sx={{
-							width:"100%",
-
-						}}
-					>
-						<Box sx={conversationStyle}
-						>
-							<Conversation />
-						</Box>
-						
-						<Box sx={conversationStyle}>
-							<Conversation/>
-						</Box>
-
-						<Box sx={conversationStyle}
-						>
-							<Avatar></Avatar>
-							<Box sx={{ml:"2rem"}}>
-								<h3>Conversation Title</h3>
-								<p>This is current message </p>
-							</Box>
-						</Box>
-					</Box>
-				</> : 
-				<>
-					<Box
-						sx={{
-							width:"100%",
-
-						}}
-					>
-						<h2>Nouvelle discussion</h2>
-
-					</Box>
-				</>}
-				
-			</Box>
-			<Box
-				sx={{
-					width:"55%",
-					height:"calc(100vh - 30px)",
-					backgroundColor:"rgb(249, 249, 249)"
-				}}
-			>
-
-			</Box>
+			<Conversations users={users}/>
+			<Messages>
+					Chat bim
+			</Messages>
 		</Box>
   );
 };
 
-const conversationStyle = {
-	width: "90%",
-	display: "flex",
-	m:"2rem auto",
-	boxShadow:"0 0 1px 0px",
-	alignItems: "center",
-	
-	pl:"2rem",
-	borderRadius:"5px"
-  };
 
-  const HeaderLink = styled(Link)`
-	color:inherit;
-	text-decoration: none;
+
+const Messages = styled.div`
+	width:60%;
+	height:calc(100vh - 30px);
+	background-color:rgb(249, 249, 249);
 `;
 
 export default Chat;
