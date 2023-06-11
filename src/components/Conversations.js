@@ -38,19 +38,21 @@ const Conversations = (props) => {
                                 position:"relative"
                             }}
                         >
-                            <Box sx={conversationStyle}
-                            >
-                                <Conversation />
-                            </Box>
-                            
-                            <Box sx={conversationStyle}>
-                                <Conversation/>
-                            </Box>
+                            <ConversationsItems>
+                                <ConversationsItem>
+                                    <Avatar/>
+                                    <ConversationTitle>
+                                        FirstName : ex: Rakoto
+                                    </ConversationTitle>
+                                </ConversationsItem>
 
-                            <Box sx={conversationStyle}
-                            >
-                                <Conversation/>
-                            </Box>
+                                <ConversationsItem>
+                                    <Avatar/>
+                                    <ConversationTitle>
+                                        FirstName : ex: Rakoto
+                                    </ConversationTitle>
+                                </ConversationsItem>
+                            </ConversationsItems>
                         </Box>
                     </> : 
                     <>
@@ -61,19 +63,19 @@ const Conversations = (props) => {
                                 position:"relative"
                             }}
                         >
-                            <MembersTitle>
+                            <ConversationsTitle>
                                 <H2>Nouvelle discussion</H2>
-                            </MembersTitle>
-                            <MembersItems>
+                            </ConversationsTitle>
+                            <ConversationsItems>
                                 {users.map(user => {
-                                    return <MembersItem  key={user.id} onClick={() => handleMemberMsg(user) }>
+                                    return <ConversationsItem  key={user.id} onClick={() => handleMemberMsg(user) }>
                                                 <Avatar />
-                                                <MemberTitle>
+                                                <ConversationTitle>
                                                     {user.get('firstName')}
-                                                </MemberTitle>			
-                                            </MembersItem>
+                                                </ConversationTitle>			
+                                            </ConversationsItem>
                                 })}						
-                            </MembersItems>
+                            </ConversationsItems>
                         </Box>
                     </>}                    
         </ConversationsContainer>
@@ -82,7 +84,8 @@ const Conversations = (props) => {
 
 const ConversationsContainer = styled.div`
     width:30%;
-    max-height:650px;
+    height: 600px
+    max-height:600px;
     background-color:rgb(249, 249, 249);
     display:flex;
     flex-direction:column;
@@ -97,25 +100,14 @@ const HeaderConversations = styled.div`
     background-color: blue;
 `;
 
-const conversationStyle = {
-	width: "90%",
-	display: "flex",
-	m:"2rem auto",
-	boxShadow:"0 0 1px 0px",
-	alignItems: "center",
-	
-	pl:"2rem",
-	borderRadius:"5px"
-};
-
-const MembersItems = styled.div`
+const ConversationsItems = styled.div`
 	height: 100%;
 	display:flex;
 	flex-direction: column;
 	justify-content: space-around;
 `;
 
-const MembersItem = styled.div`
+const ConversationsItem = styled.div`
 	
 	display:flex;	
 	align-items: center;
@@ -124,10 +116,10 @@ const MembersItem = styled.div`
 	padding: .5rem;
 `;
 
-const MemberTitle = styled.div`
+const ConversationTitle = styled.div`
 	margin:  0 0 0 2rem;
 `;
-const MembersTitle = styled.div`
+const ConversationsTitle = styled.div`
 	width: 100%;
 	background-color:grey;
 	color: white;
