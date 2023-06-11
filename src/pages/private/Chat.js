@@ -1,10 +1,9 @@
 import React from "react";
 
-import styled from "@emotion/styled";
-
 import { Box } from "@mui/material";
 
 import Conversations from "../../components/Conversations";
+import Messages from "../../components/Messages";
 
 import Parse from 'parse';
 
@@ -17,31 +16,21 @@ Parse.serverURL = PARSE_HOST_URL;
 const User = Parse.Object.extend("User");
 const query = new Parse.Query(User);
 const users = await query.find();
-console.log('users :', users)
-const Chat = () => {
-	
+
+const Chat = () => {	
   	return (
 		<Box
 			sx={{
 				width:"100%",
+				height:"600px",
 				display:"flex",
-				justifyContent:"center"
+				justifyContent:"center",
 			}}
 		>
-			<Conversations users={users}/>
-			<Messages>
-					Chat bim
-			</Messages>
+			<Conversations users={users} />
+			<Messages />
 		</Box>
   );
 };
-
-
-
-const Messages = styled.div`
-	width:60%;
-	height:calc(100vh - 30px);
-	background-color:rgb(249, 249, 249);
-`;
 
 export default Chat;

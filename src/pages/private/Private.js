@@ -11,12 +11,12 @@ const Private = () => {
         return <div>...Loading</div>
     }
     return currentUser ? (
-        <>
-          <Outlet />
-        </>
-      ) : (
-        <Navigate to="/" state={{ from: location }} />
-      );
+            <>
+            <Outlet />
+            </>
+        ) : (
+            <Navigate to="/" state={{ from: location }} />
+        );
 }
 
 export default Private
