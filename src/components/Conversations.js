@@ -1,27 +1,34 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import styled from '@emotion/styled';
 
 import { Box, Avatar, Tooltip } from '@mui/material';
 import MessageIcon from '@mui/icons-material/Message';
 
-import Conversation from './Conversation';
 import { setShowMsg, setSelectedId } from '../features/messagesSlice';
-
+import { setMsgList } from '../features/conversationSlice';
 
 const Conversations = (props) => {
 
+    const {users} = props;
+
     const dispatch = useDispatch();
+
+    const {msglist} = useSelector(store => store.conversations)
+    
+    const [newConversation, setNewConversation] = useState(false);
+
+    const test = [{name:"test", id:1}];
 
     const handleMemberMsg = (user) => {
         dispatch(setShowMsg(true));
-        dispatch(setSelectedId(user.id))
-    }
+        dispatch(setSelectedId(user.id));
+        if(!msglist.includes(user)){
+            dispatch(setMsgList(user));
+        }
+    };
     
-    const {users} = props;
-   
-    const [newConversation, setNewConversation] = useState(false);
     return (
         <ConversationsContainer>
                     <HeaderConversations>
@@ -38,20 +45,18 @@ const Conversations = (props) => {
                                 position:"relative"
                             }}
                         >
+                          
                             <ConversationsItems>
-                                <ConversationsItem>
-                                    <Avatar/>
-                                    <ConversationTitle>
-                                        FirstName : ex: Rakoto
-                                    </ConversationTitle>
-                                </ConversationsItem>
-
-                                <ConversationsItem>
-                                    <Avatar/>
-                                    <ConversationTitle>
-                                        FirstName : ex: Rakoto
-                                    </ConversationTitle>
-                                </ConversationsItem>
+                               { msglist.map(user => {
+                                    return (
+                                        <ConversationsItem key={user.id}>
+                                            <Avatar/>
+                                            <ConversationTitle>
+                                               {user.get("firstName")}
+                                            </ConversationTitle>
+                                        </ConversationsItem>
+                                    )
+                                })}
                             </ConversationsItems>
                         </Box>
                     </> : 
@@ -97,7 +102,7 @@ const HeaderConversations = styled.div`
     height: 5rem;
     width: 100%;
     
-    background-color: blue;
+    background-color: rgb(209, 209, 209);
 `;
 
 const ConversationsItems = styled.div`

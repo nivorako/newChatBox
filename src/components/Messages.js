@@ -2,11 +2,13 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import styled from '@emotion/styled';
-import { Avatar, Box } from '@mui/material';
+import { Avatar, TextField } from '@mui/material';
 
-const Messages = () => {
+const Messages = (props) => {
+	const {users} = props;
 	const {showMsg, selectedId } = useSelector(store => store.messages)
-	console.log("selectedId :", selectedId)
+	const selectedUser = users.find(user => user.id === selectedId)
+	
 	if(!showMsg){
 		return (
 			<MessagesContainer >	
@@ -19,15 +21,19 @@ const Messages = () => {
 			<HeaderMessages>
 				<Avatar />
 				<DetailHeaderMessages>
-					<H2 >Le titre de la conversation</H2>
-					<P>Liste des membres qui peuvent envoyer des msg dans la conversation</P>
+					<H2 >{selectedUser.get('firstName')}</H2>
+					{users.map(user => {
+						<p key = {user.id}>
+							{user.get("firstName")},
+						</p>
+					})}
 				</DetailHeaderMessages>
 			</HeaderMessages>
 			<BodyMessages>
 				Body
 			</BodyMessages>
 			<FooterMessages>
-				Footer
+				<TextField id="outlined-basic" label="Tapez un message :" variant="outlined" size="small" sx={{width:"80%", backgroundColor:"white"}}/>
 			</FooterMessages>
 		</MessagesContainer >
 	)
@@ -53,14 +59,19 @@ const BodyMessages = styled.div`
 `;
 
 const FooterMessages = styled.div`
-
+	width: 100%;
+	height: 50px;
+	backGround-color: rgb(209, 209, 209);
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 const HeaderMessages = styled.div`
 	width: 100%;
 	height: 5rem;
 	display:flex;
 	align-items: center;
-	backGround-color: blue;
+	backGround-color: rgb(209, 209, 209);
 `;
 const H2 = styled.h2`
 	margin: 0;

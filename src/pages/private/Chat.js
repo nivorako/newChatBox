@@ -28,7 +28,7 @@ const Chat = () => {
 			}}
 		>
 			<Conversations users={users} />
-			<Messages />
+			<Messages users={users}/>
 		</Box>
   );
 };
