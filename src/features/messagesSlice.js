@@ -1,27 +1,35 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    msg: "",
-  showMsg: null,
-  selectedId: null,
+    msg: [],
+    showMsg: false,
+    selectedId: "",
 };
 
 export const messagesSlice = createSlice({
-  name: "message",
-  initialState,
-  reducers: {
-    setShowMsg: (state, action) => {
-      state.showMsg = action.payload;
+    name: "message",
+    initialState,
+    reducers: {
+        setShowMsg: (state, action) => {
+            state.showMsg = action.payload;
+        },
+        setSelectedId: (state, action) => {
+            state.selectedId = action.payload;
+        },
+        setMsg: (state, action) => {
+            state.msg = [...state.msg, ...action.payload];
+        },
+        clearMsg: (state) => {
+            state.msg = [];
+            state.selectedId = "";
+            state.showMsg = false;
+        },
+        resetMsg: (state) => {
+            state.msg = [];
+        }
     },
-    setSelectedId: (state, action) => {
-      state.selectedId = action.payload;
-    },
-    setMsg: (state, action) => {
-        state.msg = action.payload;
-    }
-  },
 });
 
-export const { setShowMsg, setSelectedId, setMsg } = messagesSlice.actions;
+export const { setShowMsg, setSelectedId, setMsg, clearMsg, resetMsg } = messagesSlice.actions;
 
 export default messagesSlice.reducer;

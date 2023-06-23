@@ -9,12 +9,14 @@ export const conversationSlice = createSlice({
   initialState,
   reducers: {
     setMsgList: (state, action) => {
-      const newMessage = action.payload;
-      state.msglist.push(newMessage);
+      state.msglist = [...state.msglist, ...action.payload];
     },
+    clearMsgList: (state) => {
+      state.msglist = [];
+    }
   },
 });
 
-export const { setMsgList } = conversationSlice.actions;
+export const { setMsgList, clearMsgList } = conversationSlice.actions;
 
 export default conversationSlice.reducer;

@@ -22,76 +22,78 @@ const Conversations = (props) => {
         dispatch(setShowMsg(true));
         dispatch(setSelectedId(user.id));
 
-        const newUser = {
-        id: user.id,
-        firstName: user.get("firstName"),
-        };
+        const newUser = [{
+            id: user.id,
+            lastName: user.get("lastName"),
+        }];
+
         const isUserFound = msglist.find(
-        (item) => item.id === newUser.id && item.firstName === newUser.firstName
+            (item) => item.id === newUser.id && item.lastName === newUser.lastName
         );
+
         if (!isUserFound) {
-        dispatch(setMsgList(newUser));
+            dispatch(setMsgList(newUser));
         }
     };
 
     return (
         <ConversationsContainer>
-        <HeaderConversations>
-            <Tooltip title="nouvelle discussion" sx={{ margin: "1rem" }}>
-            <MessageIcon onClick={() => setNewConversation(!newConversation)} />
-            </Tooltip>
-        </HeaderConversations>
-        {!newConversation ? (
-            <>
-            <Box
-                sx={{
-                width: "100%",
-                overflow: "auto",
-                position: "relative",
-                }}
-            >
-                <ConversationsItems>
-                {msglist.map((user) => {
-                    return (
-                    <ConversationsItem key={user.id}>
-                        <Avatar />
-                        <ConversationTitle>{user.firstName}</ConversationTitle>
-                    </ConversationsItem>
-                    );
-                })}
-                </ConversationsItems>
-            </Box>
-            </>
-        ) : (
-            <>
-            <Box
-                sx={{
-                width: "100%",
-                overflow: "auto",
-                position: "relative",
-                }}
-            >
-                <ConversationsTitle>
-                <H2>Nouvelle discussion</H2>
-                </ConversationsTitle>
-                <ConversationsItems>
-                {users.map((user) => {
-                    return (
-                    <ConversationsItem
-                        key={user.id}
-                        onClick={() => handleMemberMsg(user)}
+            <HeaderConversations>
+                <Tooltip title="nouvelle discussion" sx={{ margin: "1rem" }}>
+                    <MessageIcon onClick={() => setNewConversation(!newConversation)} />
+                </Tooltip>
+            </HeaderConversations>
+            {!newConversation ? (
+                <>
+                    <Box
+                        sx={{
+                        width: "100%",
+                        overflow: "auto",
+                        position: "relative",
+                        }}
                     >
-                        <Avatar />
-                        <ConversationTitle>
-                        {user.get("firstName")}
-                        </ConversationTitle>
-                    </ConversationsItem>
-                    );
-                })}
-                </ConversationsItems>
-            </Box>
-            </>
-        )}
+                        <ConversationsItems>
+                            {msglist.map((user) => {
+                                return (
+                                <ConversationsItem key={user.id}>
+                                    <Avatar />
+                                    <ConversationTitle>{user.lastName}</ConversationTitle>
+                                </ConversationsItem>
+                                );
+                            })}
+                        </ConversationsItems>
+                    </Box>
+                </>
+            ) : (
+                <>
+                    <Box
+                        sx={{
+                        width: "100%",
+                        overflow: "auto",
+                        position: "relative",
+                        }}
+                    >
+                        <ConversationsTitle>
+                            <H2>Nouvelle discussion</H2>
+                        </ConversationsTitle>
+                        <ConversationsItems>
+                            {users.map((user) => {
+                                return (
+                                <ConversationsItem
+                                    key={user.id}
+                                    onClick={() => handleMemberMsg(user)}
+                                >
+                                    <Avatar />
+                                    <ConversationTitle>
+                                        {user.get("lastName")}
+                                    </ConversationTitle>
+                                </ConversationsItem>
+                                );
+                            })}
+                        </ConversationsItems>
+                    </Box>
+                </>
+            )}
         </ConversationsContainer>
     );
 };
@@ -99,7 +101,7 @@ const Conversations = (props) => {
 const ConversationsContainer = styled.div`
     width:30%;
     height: calc(100vh - 100px);
-    max-height: calc(100vh - 100px);
+    max-height: calc(100vh - 150px);
     background-color:rgb(249, 249, 249);
     display:flex;
     flex-direction:column;
