@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import styled from "@emotion/styled";
@@ -17,13 +17,15 @@ Parse.serverURL = PARSE_HOST_URL;
 Parse.liveQueryServerURL = "ws://newchat.b4a.io";
 
 const Messages = (props) => {
-	const { currentUser } = useSelector((store) => store.auth);
 	const { users } = props;
-	// const [msgCreated, setMsgCreated] = useState("");
+	const [messages, setMessages] = useState([])
+	const { currentUser } = useSelector((store) => store.auth);
 	const { showMsg, selectedId } = useSelector((store) => store.messages);
 	const selectedUser = users.find((user) => user.id === selectedId);
 	const sender = users.find(user => user.get("username") === currentUser.username)
 	const dispatch = useDispatch();
+
+	messages.sort((a, b) => b.createdAt - a.createdAt);
 
 	useEffect(() => {
 		async function createMsg(){
@@ -43,11 +45,10 @@ const Messages = (props) => {
 			messageQuery.containedIn("objectId", conversations.flatMap(conversation =>	conversation.get("messages")))		
 			const messages = await messageQuery.find();
 
-			console.log("conversations :", conversations[0].id === selectedId)
-			
+			setMessages(messages);
 			dispatch(resetMsg());
+
 			messages.forEach(msg => {
-				console.log('messages :', msg.get("Msg"));
 				dispatch(setMsg([msg.get("Msg")]));
 			});
 		}
@@ -55,6 +56,18 @@ const Messages = (props) => {
 		createMsg()
 	}, [sender.id, selectedId, dispatch]);
 
+	// useEffect(() => {
+	// 	const subscription = new Parse.Query("Messages").subscribe();
+	  
+	// 	subscription.on("create", (message) => {
+	// 	  setMessages((prevMessages) => [...prevMessages, message]);
+	// 	});
+	  
+	// 	return () => {
+	// 	  subscription.unsubscribe();
+	// 	};
+	//   }, []);
+	  
 
 	// set up and save message and conversations on back4app
 	// dispatch message to store
@@ -77,8 +90,8 @@ const Messages = (props) => {
 			conversations.addUnique("messages", message.id);
 
 			await conversations.save();
-
-			dispatch(setMsg([e.target.value]))
+			setMessages((prevMessages) => [...prevMessages, message]);
+			dispatch(setMsg([e.target.value]));
         	e.target.value = "";
 		}
 	};
@@ -97,16 +110,16 @@ const Messages = (props) => {
 				</DetailHeaderMessages>
 			</HeaderMessages>
 			<BodyMessages>
-				<SenderMsg>
-					<P>
-						Ceci est votre message
-					</P>
-				</SenderMsg>
-				<ReceivedMsg>
-					<P>
-						"ceci est mon message"
-					</P>
-				</ReceivedMsg>
+				{
+					messages.map(msg =>{
+						if(msg.get("sender") === sender.id){
+							return(
+								<SenderMsg>{msg.get("Msg")} </SenderMsg>
+							)
+						}
+						return<ReceivedMsg>{msg.get("Msg")}</ReceivedMsg>
+					})
+				}
 			</BodyMessages>
 			<FooterMessages>
 				<TextField
@@ -139,7 +152,7 @@ const BodyMessages = styled.div`
 	height: 100%;
 	padding: 2rem;
 	display: flex;
-	flex-direction: column;
+	flex-direction: column-reverse;
 	justify-content: flex-end;
 `;
 

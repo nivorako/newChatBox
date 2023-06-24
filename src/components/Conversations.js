@@ -28,7 +28,7 @@ const Conversations = (props) => {
         }];
 
         const isUserFound = msglist.find(
-            (item) => item.id === newUser.id && item.lastName === newUser.lastName
+            (item) => item.id === newUser[0].id && item.lastName === newUser[0].lastName
         );
 
         if (!isUserFound) {
